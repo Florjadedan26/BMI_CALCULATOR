@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'class.dart';
+import 'const.dart';
 
-const bottomContainerHeight = 80.0;
-const newCustomColor = Color(0xFF24263B);
-const bottomCustomColor = Color(0xFFEB1555);
-const cardIconMale = FontAwesomeIcons.mars;
-const cardIconeFemale = FontAwesomeIcons.venus;
+enum EnumGender { male, female }
 
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
@@ -15,11 +12,13 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  EnumGender? selectedGender;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("BMI CALCULATOR"),
+          title: const Text("BMI CALCULATOR"),
         ),
         body: Column(
           children: [
@@ -27,12 +26,36 @@ class _InputPageState extends State<InputPage> {
               child: Row(
                 children: [
                   Expanded(
-                    child: ReusableCard(customColors: newCustomColor,
-                      carChild: ColumnCard( cardIcon: cardIconMale, cardText: 'MALE',),),
+                    child: ReusableCard(
+                      onPress: (){
+                        setState(() {
+                          selectedGender = EnumGender.male;
+                        });
+
+                      },
+                      customColors: selectedGender == EnumGender.male
+                          ? activeCustomColor
+                          : inactiveCustomColor,
+                      carChild: ColumnCard(
+                        cardIcon: cardIconMale,
+                        cardText: 'MALE',
+                      ),
+                    ),
                   ),
                   Expanded(
-                    child: ReusableCard(customColors: newCustomColor,
-                    carChild: ColumnCard( cardIcon: cardIconeFemale, cardText: "FEMALE",),
+                    child: ReusableCard(
+                      onPress: (){
+                        setState(() {
+                          selectedGender = EnumGender.female;
+                        });
+                      },
+                      customColors: selectedGender == EnumGender.female
+                          ? activeCustomColor
+                          : inactiveCustomColor,
+                      carChild: ColumnCard(
+                        cardIcon: cardIconeFemale,
+                        cardText: "FEMALE",
+                      ),
                     ),
                   ),
                 ],
@@ -40,19 +63,19 @@ class _InputPageState extends State<InputPage> {
             ),
 
             //the middle container
-            Expanded(
-              child: ReusableCard(customColors: newCustomColor),
+            const Expanded(
+              child: ReusableCard(customColors: activeCustomColor),
             ),
 
             //second row at the bottom
             Expanded(
               child: Row(
-                children: [
+                children: const [
                   Expanded(
-                    child: ReusableCard(customColors: newCustomColor),
+                    child: ReusableCard(customColors: activeCustomColor),
                   ),
                   Expanded(
-                    child: ReusableCard(customColors: newCustomColor),
+                    child: ReusableCard(customColors: activeCustomColor),
                   ),
                 ],
               ),
@@ -60,58 +83,11 @@ class _InputPageState extends State<InputPage> {
 
             Container(
               color: bottomCustomColor,
-              margin: EdgeInsets.only(top: 15),
+              margin: const EdgeInsets.only(top: 15),
               width: double.infinity,
               height: bottomContainerHeight,
             )
           ],
         ));
-  }
-}
-
-class ColumnCard extends StatelessWidget {
-  ColumnCard({required this.cardIcon, required this.cardText});
-
-  final IconData cardIcon;
-  final String cardText;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column (
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(cardIcon,
-        size: 80.0,
-        ),
-        SizedBox(
-          height: 15.0,
-        ),
-        Text(cardText,
-        style: TextStyle(
-          fontSize: 20.0,
-          color: Color(0xFF8D8E98)
-        ),
-        ),
-      ],
-    );
-  }
-}
-
-class ReusableCard extends StatelessWidget {
-  ReusableCard({required this.customColors , this.carChild});
-
-  final Color customColors;
-  final Widget? carChild;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: customColors,
-      ),
-      child: carChild,
-    );
   }
 }

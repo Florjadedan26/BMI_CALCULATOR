@@ -13,9 +13,9 @@ class BMICALCULATOR extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: Color(0xFF1D2136),
+          primary: Color(0xFF0F0F1E),
         ),
-        scaffoldBackgroundColor: Color(0xFF1D2136),
+        scaffoldBackgroundColor: Color(0xFF0F0F1E),
       ),
       home: InputPage(),
     );
