@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'class.dart';
-import 'const.dart';
+import 'constant.dart';
 
 enum EnumGender { male, female }
 
@@ -13,6 +13,7 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   EnumGender? selectedGender;
+  int height = 180;
 
   @override
   Widget build(BuildContext context) {
@@ -21,39 +22,39 @@ class _InputPageState extends State<InputPage> {
           title: const Text("BMI CALCULATOR"),
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
               child: Row(
                 children: [
                   Expanded(
                     child: ReusableCard(
-                      onPress: (){
+                      onPress: () {
                         setState(() {
                           selectedGender = EnumGender.male;
                         });
-
                       },
                       customColors: selectedGender == EnumGender.male
-                          ? activeCustomColor
-                          : inactiveCustomColor,
-                      carChild: ColumnCard(
-                        cardIcon: cardIconMale,
+                          ? KActiveCustomColor
+                          : KInactiveCustomColor,
+                      cardChild: ColumnCard(
+                        cardIcon: KCardIconMale,
                         cardText: 'MALE',
                       ),
                     ),
                   ),
                   Expanded(
                     child: ReusableCard(
-                      onPress: (){
+                      onPress: () {
                         setState(() {
                           selectedGender = EnumGender.female;
                         });
                       },
                       customColors: selectedGender == EnumGender.female
-                          ? activeCustomColor
-                          : inactiveCustomColor,
-                      carChild: ColumnCard(
-                        cardIcon: cardIconeFemale,
+                          ? KActiveCustomColor
+                          : KInactiveCustomColor,
+                      cardChild: ColumnCard(
+                        cardIcon: KCardIconeFemale,
                         cardText: "FEMALE",
                       ),
                     ),
@@ -63,8 +64,46 @@ class _InputPageState extends State<InputPage> {
             ),
 
             //the middle container
-            const Expanded(
-              child: ReusableCard(customColors: activeCustomColor),
+            Expanded(
+              child: ReusableCard(
+                customColors: KActiveCustomColor,
+                cardChild: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('HEIGHT', style: KTextLabel),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(height.toString(), style: KHeightLabel),
+                        Text('CM', style: KTextLabel),
+                      ],
+                    ),
+                    SliderTheme(
+                      data: SliderThemeData(
+                        activeTrackColor: Colors.white,
+                        inactiveTrackColor:Color(0xFF8D8E98) ,
+                        thumbColor: Color(0xFFEB1555),
+                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 11.0),
+                        overlayColor: Color(0x1FEB1555),
+                        overlayShape:
+                            RoundSliderOverlayShape(overlayRadius: 25),
+                      ),
+                      child: Slider(
+                        value: height.toDouble(),
+                        min: 120.0,
+                        max: 220.0,
+                        onChanged: (double newHeight) {
+                          setState(() {
+                            height = newHeight.round();
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
 
             //second row at the bottom
@@ -72,20 +111,20 @@ class _InputPageState extends State<InputPage> {
               child: Row(
                 children: const [
                   Expanded(
-                    child: ReusableCard(customColors: activeCustomColor),
+                    child: ReusableCard(customColors: KActiveCustomColor),
                   ),
                   Expanded(
-                    child: ReusableCard(customColors: activeCustomColor),
+                    child: ReusableCard(customColors: KActiveCustomColor),
                   ),
                 ],
               ),
             ),
 
             Container(
-              color: bottomCustomColor,
+              color: KBottomCustomColor,
               margin: const EdgeInsets.only(top: 15),
               width: double.infinity,
-              height: bottomContainerHeight,
+              height: KBottomContainerHeight,
             )
           ],
         ));
