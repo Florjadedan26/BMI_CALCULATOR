@@ -16,6 +16,14 @@ const KCardIconeFemale = FontAwesomeIcons.venus;
 //text of the card
 const KTextLabel = TextStyle(fontSize: 20.0, color: Color(0xFF8D8E98));
 
-//text of the slide
-const KHeightLabel = TextStyle(fontSize: 50.0, fontWeight: FontWeight.w900);
+//text of the slide & theme
+const KNumberLabel = TextStyle(fontSize: 50.0, fontWeight: FontWeight.w900);
+const KInactiveColor =  Color(0xFF8D8E98);
+const KThumbColor = Color(0xFFEB1555);
+const KOverlayColor= Color(0x1FEB1555);
+const KRoundSilderThumb = RoundSliderThumbShape(enabledThumbRadius: 11.0);
+const KRoundSliderOverlay =  RoundSliderOverlayShape(overlayRadius: 25);
 
+// icon button both weight and age
+
+const KIconButtonColor = Color(0xFF4C4F5E);

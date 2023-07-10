@@ -53,3 +53,49 @@ class ReusableCard extends StatelessWidget {
     );
   }
 }
+
+// for  weight-icon-button
+class RoundIconButton extends StatelessWidget {
+  const RoundIconButton({super.key, required this.weightIcons, required this.weightOncheck});
+
+  final VoidCallback? weightOncheck;
+  final IconData? weightIcons;
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: weightOncheck,
+      child: Icon(weightIcons),
+      elevation: 6.0,
+      constraints: BoxConstraints.tightFor(
+        width: 56.0,
+        height: 56.0,
+      ),
+      shape: CircleBorder(),
+      fillColor: KIconButtonColor,
+    );
+  }
+}
+
+// for age-icon-button
+
+class RoundAgeIcon extends StatelessWidget {
+  const RoundAgeIcon({required this.ageIcon,required this.ageOncheck });
+
+  final IconData? ageIcon;
+  final VoidCallback? ageOncheck;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: ageOncheck,
+      elevation: 6.0,
+      child: Icon(ageIcon),
+      constraints: BoxConstraints.tightFor(
+        width: 56.0,
+        height: 56.0,
+      ),
+      shape: CircleBorder(),
+      fillColor: KIconButtonColor,
+    );
+  }
+}
