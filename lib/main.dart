@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'input_page.dart';
+import 'screenpage/inputpage.dart';
 
 void main() {
   runApp(const BMICALCULATOR());
@@ -13,10 +13,11 @@ class BMICALCULATOR extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: Color(0xFF0F0F1E),
+          primary: const Color(0xFF0F0F1E),
         ),
-        scaffoldBackgroundColor: Color(0xFF0F0F1E),
+        scaffoldBackgroundColor: const Color(0xFF0F0F1E),
       ),
+
       home: InputPage(),
     );
   }

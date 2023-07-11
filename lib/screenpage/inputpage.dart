@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'class.dart';
-import 'constant.dart';
+import '../constant.dart';
+import 'package:bmi_app/components/reusablecard.dart';
+import 'package:bmi_app/components/weightandgebutton.dart';
+import 'package:bmi_app/components/columcard.dart';
+import 'package:bmi_app/components/bottom_button.dart';
+import 'package:bmi_app/calculator_brain.dart';
+import 'resultpage.dart';
 
 enum EnumGender { male, female }
 
@@ -38,10 +43,10 @@ class _InputPageState extends State<InputPage> {
                         });
                       },
                       customColors: selectedGender == EnumGender.male
-                          ? KActiveCustomColor
-                          : KInactiveCustomColor,
-                      cardChild: ColumnCard(
-                        cardIcon: KCardIconMale,
+                          ? kActiveCustomColor
+                          : kInactiveCustomColor,
+                      cardChild: const ColumnCard(
+                        cardIcon: kCardIconMale,
                         cardText: 'MALE',
                       ),
                     ),
@@ -54,10 +59,10 @@ class _InputPageState extends State<InputPage> {
                         });
                       },
                       customColors: selectedGender == EnumGender.female
-                          ? KActiveCustomColor
-                          : KInactiveCustomColor,
-                      cardChild: ColumnCard(
-                        cardIcon: KCardIconeFemale,
+                          ? kActiveCustomColor
+                          : kInactiveCustomColor,
+                      cardChild: const ColumnCard(
+                        cardIcon: kCardIconFemale,
                         cardText: "FEMALE",
                       ),
                     ),
@@ -69,28 +74,28 @@ class _InputPageState extends State<InputPage> {
             //the middle container
             Expanded(
               child: ReusableCard(
-                customColors: KActiveCustomColor,
+                customColors: kActiveCustomColor,
                 cardChild: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('HEIGHT', style: KTextLabel),
+                    const Text('HEIGHT', style: kTextLabel),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.baseline,
                       textBaseline: TextBaseline.alphabetic,
                       children: [
-                        Text(height.toString(), style: KNumberLabel),
-                        Text('CM', style: KTextLabel),
+                        Text(height.toString(), style: kNumberLabel),
+                        const Text('CM', style: kTextLabel),
                       ],
                     ),
                     SliderTheme(
                       data: const SliderThemeData(
                         activeTrackColor: Colors.white,
-                        inactiveTrackColor: KInactiveColor,
-                        thumbColor: KThumbColor,
-                        thumbShape: KRoundSilderThumb,
-                        overlayColor: KOverlayColor,
-                        overlayShape: KRoundSliderOverlay,
+                        inactiveTrackColor: kInactiveColor,
+                        thumbColor: kThumbColor,
+                        thumbShape: kRoundSilderThumb,
+                        overlayColor: kOverlayColor,
+                        overlayShape: kRoundSliderOverlay,
                       ),
                       child: Slider(
                         value: height.toDouble(),
@@ -114,11 +119,14 @@ class _InputPageState extends State<InputPage> {
                 children: [
                   Expanded(
                     child: ReusableCard(
-                      customColors: KActiveCustomColor,
+                      customColors: kActiveCustomColor,
                       cardChild: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('WEIGHT', style: KTextLabel,),
+                          const Text(
+                            'WEIGHT',
+                            style: kTextLabel,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -126,11 +134,11 @@ class _InputPageState extends State<InputPage> {
                             children: [
                               Text(
                                 weight.toString(),
-                                style: KNumberLabel,
+                                style: kNumberLabel,
                               ),
-                              Text(
+                              const Text(
                                 'KG',
-                                style: KTextLabel,
+                                style: kTextLabel,
                               )
                             ],
                           ),
@@ -145,7 +153,7 @@ class _InputPageState extends State<InputPage> {
                                 },
                                 weightIcons: FontAwesomeIcons.minus,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10.0,
                               ),
                               RoundIconButton(
@@ -166,50 +174,58 @@ class _InputPageState extends State<InputPage> {
                     child: ReusableCard(
                         cardChild: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-
                           children: [
-                            Text('AGE', style: KTextLabel,),
-                            Text(age.toString(), style: KNumberLabel,),
+                            const Text(
+                              'AGE',
+                              style: kTextLabel,
+                            ),
+                            Text(
+                              age.toString(),
+                              style: kNumberLabel,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                  RoundAgeIcon(ageIcon: FontAwesomeIcons.minus,
-                                    ageOncheck: (){
+                                RoundAgeIcon(
+                                  ageIcon: FontAwesomeIcons.minus,
+                                  ageOncheck: () {
                                     setState(() {
                                       age--;
                                     });
-                                    },
-                                  ),
-                                SizedBox(
-                                  width: 10.0,
-                                ),
-                                RoundAgeIcon(ageIcon: FontAwesomeIcons.plus,
-                                  ageOncheck: (){
-                                  age ++ ;
                                   },
                                 ),
-
-
+                                const SizedBox(
+                                  width: 10.0,
+                                ),
+                                RoundAgeIcon(
+                                  ageIcon: FontAwesomeIcons.plus,
+                                  ageOncheck: () {
+                                    age++;
+                                  },
+                                ),
                               ],
                             )
                           ],
-
-                        ), customColors: KActiveCustomColor),
+                        ),
+                        customColors: kActiveCustomColor),
                   ),
                 ],
               ),
             ),
 
-            Container(
-              color: KBottomCustomColor,
-              margin: const EdgeInsets.only(top: 15),
-              width: double.infinity,
-              height: KBottomContainerHeight,
+            ReusableButton(
+              onPressed: () {
+                CalculatorBrain cals =
+                    CalculatorBrain(height: height, weight: weight);
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>  ResultPage(
+                  bmi: cals.calculatorBMI(),
+                  textResult: cals.getResult(),
+                  interpretation: cals.getInterpretation(),
+                )),);
+              },
+              textButton: 'Calculate',
             )
           ],
         ));
   }
 }
-
-
-
